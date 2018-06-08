@@ -24,6 +24,7 @@
   <% end %>
   </tbody>
 </table>
+
 <div class="row">
   <div class="col-md-3">
   </div>
@@ -33,3 +34,16 @@
     </div>
   </div>
 </div>
+
+<script>
+
+    $(document).ready(function(){
+        $('tr.linkable').click( function() {
+            var target_url = $(this).data('href');
+            if (target_url != null) {
+                window.location = target_url;
+            }
+            return false;
+        });
+    });
+</script>
