@@ -1,0 +1,26 @@
+<table class="table table-hover no-more-tables">
+  <thead>
+  <tr>
+    <th>no</th>
+    <th>REQTS</th>
+    <th>title</th>
+    <th>assignee</th>
+    <th>reporter</th>
+    <th>status</th>
+    <th>created_at</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @jira.each do |item| %>
+    <tr class="linkable" data-href="https://jira.nbt.com/browse/<%= item['num'].to_s %>" >
+      <td><%= item['id'] %></td>
+      <td><%= item['num'] %></td>
+      <td><%= item['title'] %></td>
+      <td><%= item['assignee'] %></td>
+      <td><%= item['reporter'] %></td>
+      <td><%= item['status'] %></td>
+      <td><%= item['created'] %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
