@@ -1,3 +1,35 @@
+<style>
+  select {
+    width: 70px;
+    background-color: #ffffff;
+    background-image: none !important;
+    border: 1px solid #e5e5e5;
+    outline: none;
+    min-height: 35px;
+  }
+</style>
+
+<div class="col-md-12" style="margin-bottom: 24px;">
+  <div class="panel-body">
+    <div class="col-md-1">
+      <%= link_to '전체보기'.html_safe, root_path, class: 'btn btn-success', style: 'float: left;' %>
+    </div>
+    <div class="col-md-4">
+      <%= form_tag root_path, method: :get do %>
+        <%= select_date Date.today, prefix: :start_date %>
+        ~ <%= select_date Date.today, prefix: :end_date %><%= submit_tag '검색' %>
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <%= form_tag root_path, method: :get, style: 'display:inline-block; width: 80%;' do %>
+        <%= select_tag 'search_category', options_for_select(Jira::SEARCH_CATEGORY.collect{ |k,v| [k,v]}, :selected => @selected_category.present? ? @selected_category : Jira::SEARCH_CATEGORY['REQTS_num']) %>
+        <input id="param" name="search" type="text" class="form-control" style="width:40%; display:inline-block; margin-right:15px;" value="<%= params[:search] if params[:search].present? %>">
+        <%= submit_tag('검색', name: nil , class: 'btn btn-default ') %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
 <table class="table table-hover no-more-tables">
   <thead>
   <tr>
