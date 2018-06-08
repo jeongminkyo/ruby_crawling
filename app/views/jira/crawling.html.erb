@@ -9,6 +9,20 @@
   }
 </style>
 
+<h3>RETQS 할당 수</h3>
+<div style="float: left; width: 50%">
+  <%= column_chart @jira_group %>
+</div>
+<div style="float: left; width: 50%">
+  <%= pie_chart  @jira_group %>
+</div>
+
+<h3>날짜별 RETQS 수</h3>
+<%= line_chart @jira_date %>
+
+<h3>달별 RETQS 수</h3>
+<%= column_chart @jira_month %>
+
 <div class="col-md-12" style="margin-bottom: 24px;">
   <div class="panel-body">
     <div class="col-md-1">
