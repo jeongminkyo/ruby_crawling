@@ -37,7 +37,7 @@ gem 'jbuilder', '~> 2.5'
 
 # crawling
 gem 'nokogiri'
-gem 'watir-rails'
+gem 'mechanize'
 
 # bootstarp
 gem 'bootstrap-sass', '~> 3.3.6'

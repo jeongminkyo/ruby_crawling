@@ -1,18 +1,19 @@
 
 task insert_db_first: :environment do
-  browser = Watir::Browser.start 'https://jira.nbt.com/login.jsp?os_destination=%2Fsecure%2FDashboard.jspa'
-  t = browser.text_field(name: 'os_username')
-  t.set ''
-  browser.text_field(name: 'os_password').set ''
-  browser.button(name: 'login').click
+  mechanize = Mechanize.new
+
+  page = mechanize.get('https://jira.nbt.com/login.jsp')
+  page.forms[1].field_with(:name => 'os_username').value = ''
+  page.forms[1].field_with(:name => 'os_password').value = ''
+  page.forms[1].submit
 
   arr = []
   for i in (0..2)
     if i.zero? ? url = 'https://jira.nbt.com/issues/?jql=project%20%3D%20REQTS' : url = 'https://jira.nbt.com/issues/?jql=project%20%3D%20REQTS&startIndex=' + (50*i).to_s
-      browser.goto url
+      page = mechanize.get(url)
     end
 
-    doc = Nokogiri::HTML.parse(browser.html)
+    doc = page.parser
 
     doc.css('#issuetable').css('tbody').css('tr').each do |x|
       if Jira.last.present?
@@ -50,17 +51,18 @@ end
 
 
 task insert_db: :environment do
-  browser = Watir::Browser.start 'https://jira.nbt.com/login.jsp?os_destination=%2Fsecure%2FDashboard.jspa'
-  t = browser.text_field(name: 'os_username')
-  t.set ''
-  browser.text_field(name: 'os_password').set ''
-  browser.button(name: 'login').click
+  mechanize = Mechanize.new
+
+  page = mechanize.get('https://jira.nbt.com/login.jsp')
+  page.forms[1].field_with(:name => 'os_username').value = ''
+  page.forms[1].field_with(:name => 'os_password').value = ''
+  page.forms[1].submit
 
   arr = []
   url = 'https://jira.nbt.com/issues/?jql=project%20%3D%20REQTS'
-  browser.goto url
+  page = mechanize.get(url)
 
-  doc = Nokogiri::HTML.parse(browser.html)
+  doc = page.parser
 
   doc.css('#issuetable').css('tbody').css('tr').each do |x|
     if x.css('.issuekey').css('.issue-link').text > Jira.last.num
